@@ -1,7 +1,9 @@
-<img align="left" src="https://github.com/raysan5/makeitc/blob/master/logo/mic_logo.png" width="594px">
+<img align="center" src="logo/mic_logo.png" width="594px">
 
 # mic (make-it-c)
 A simple and easy-to-use library to build pipelines in C
+
+<br>
 
 This library provides a set of platform-independant functions intended to be used for pipelines definition. The goal of the project is allow to define pipelines just coding them in plain C, using all the benefits provided by the language itself (variables definition, conditional branching, loops, preprocessor...) and combine that with some useful functions to deal with the file system, with text files, with timming and other elements related to processes automation.
 
