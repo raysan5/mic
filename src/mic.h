@@ -7,12 +7,12 @@
 *
 *   CONFIGURATION:
 *
-*   #define MAKEITC_IMPLEMENTATION
+*   #define MIC_IMPLEMENTATION
 *       Generates the implementation of the library into the included file.
 *       If not defined, the library is in header only mode and can be included in other headers
 *       or source files without problems. But only ONE file should hold the implementation.
 *
-*   #define MAKEITC_xxxx
+*   #define MIC_xxxx
 *       If defined, the library can...
 *
 *   DEPENDENCIES:
@@ -46,8 +46,8 @@
 *
 **********************************************************************************************/
 
-#ifndef MAKEITC_H
-#define MAKEITC_H
+#ifndef MIC_H
+#define MIC_H
 
 #ifndef MICAPI
     #define MICAPI   // We are building or using the library as a static library (or Linux shared library)
@@ -95,14 +95,14 @@
 // Trace log level
 // NOTE: Organized by priority level
 typedef enum {
-    LOG_ALL = 0,        // Display all logs
-    LOG_TRACE,          // Trace logging, intended for internal use only
-    LOG_DEBUG,          // Debug logging, used for internal debugging, it should be disabled on release builds
-    LOG_INFO,           // Info logging, used for program execution info
-    LOG_WARNING,        // Warning logging, used on recoverable failures
-    LOG_ERROR,          // Error logging, used on unrecoverable failures
-    LOG_FATAL,          // Fatal logging, used to abort program: exit(EXIT_FAILURE)
-    LOG_NONE            // Disable logging
+    MIC_LOG_ALL = 0,        // Display all logs
+    MIC_LOG_TRACE,          // Trace logging, intended for internal use only
+    MIC_LOG_DEBUG,          // Debug logging, used for internal debugging, it should be disabled on release builds
+    MIC_LOG_INFO,           // Info logging, used for program execution info
+    MIC_LOG_WARNING,        // Warning logging, used on recoverable failures
+    MIC_LOG_ERROR,          // Error logging, used on unrecoverable failures
+    MIC_LOG_FATAL,          // Fatal logging, used to abort program: exit(EXIT_FAILURE)
+    MIC_LOG_NONE            // Disable logging
 } micTraceLogLevel;
 
 
@@ -114,7 +114,7 @@ typedef enum {
 } micEnvInfo;
 
 // Callbacks to hook some internal functions
-typedef void (*TraceLogCallback)(int logLevel, const char *text, va_list args);  // Logging: Redirect trace log messages
+typedef void (*micTraceLogCallback)(int logLevel, const char *text, va_list args);  // Logging: Redirect trace log messages
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -127,7 +127,7 @@ extern "C" {            // Prevents name mangling of functions
 // Log System
 MICAPI void micTraceLog(int logLevel, const char *text, ...);           // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
 MICAPI void micSetTraceLogLevel(int logLevel);                          // Set the current threshold (minimum) log level
-MICAPI void micSetTraceLogCallback(TraceLogCallback callback);          // Set custom trace log
+MICAPI void micSetTraceLogCallback(micTraceLogCallback callback);          // Set custom trace log
 
 // Environment
 MICAPI void micSetEnvironmentFlags(unsigned int flags);                 // Setup environment config flags
@@ -231,16 +231,16 @@ MICAPI unsigned char *micDecompressData(unsigned char *compData, int compDataLen
 }
 #endif
 
-#endif // MAKEITC_H
+#endif // MIC_H
 
 
 /***********************************************************************************
 *
-*   MAKEITC IMPLEMENTATION
+*   MIC IMPLEMENTATION
 *
 ************************************************************************************/
 
-#if defined(MAKEITC_IMPLEMENTATION)
+#if defined(MIC_IMPLEMENTATION)
 
 #include <stdlib.h>
 #include <math.h>               // Required for: sinf(), cosf(), sqrtf()
@@ -269,3 +269,5 @@ MICAPI unsigned char *micDecompressData(unsigned char *compData, int compDataLen
 // Module Functions Definition
 //----------------------------------------------------------------------------------
 //...
+
+#endif   // MIC_IMPLEMENTATION
